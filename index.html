@@ -4,7 +4,9 @@
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width" initial-scale="1">
+		<!-- Style sheet to generally normalize html elements look and feel across browsers -->
 		<link rel="stylesheet" src="//normalize-css.googlecode.com/svn/trunk/normalize.css" />
+		<!-- Style sheet for Font Awesome - quick royalty free icons that can be used right away simply by adding css classes to your UI elements -->
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
 		<link rel="stylesheet" href="metronome.css"/>
 		<title>Metronome</title>
@@ -12,9 +14,15 @@
 	<body>
 		<div class="metronome">
 			<div class="player">
-				<div><span class="beats"></span><span class="bpm">BPM</span></div>
 				<div>
-					<button class="play"><span class="play-text fa fa-play"></span></button>
+					<span class="beats"></span>
+					<span class="bpm">BPM</span>
+				</div>
+				<div>
+					<button class="play">
+						<!-- .fa and .fa-play are font awesome class styles -->
+						<span class="play-text fa fa-play"></span>
+					</button>
 				</div>
 			</div>
 			<input class="beat-slider" type="range" min="0" max="42" value="15">
