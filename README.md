@@ -1,7 +1,7 @@
 # A Simple metronome built with Javascript
 
 
-What’s up my fellow brothers and sisters, in this post I’ll be covering how I built a simple metronome in Javascript, based off of the [Google metronome](https://www.google.com/?ion=1&espv=2#q=metronome). Feel free to leave questions or provide suggestions on how to improve the code. I hope this proves fruitful for some of you. A demo of which can be found [here]().
+What’s up my fellow brothers and sisters, in this post I’ll be covering how I built a simple metronome in Javascript, based off of the [Google metronome](https://www.google.com/?ion=1&espv=2#q=metronome). Feel free to leave questions or provide suggestions on how to improve the code. I hope this proves fruitful for some of you. A demo of which can be found [here](https://klufkin.github.io/simple-metronome/).
 
 ### The Problem: Build a Working metronome using Javascript.
 
