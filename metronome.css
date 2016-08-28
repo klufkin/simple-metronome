@@ -1,0 +1,80 @@
+body {
+	font-family: sans-serif;
+
+}
+
+.metronome {
+	width: 50%;
+    min-width: 480px;
+	padding: 20px;
+    box-shadow: 0px 2px 3px rgba(0,0,0,.15);
+}
+
+.player {
+	display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+
+.beats {
+	font-size: 50px;
+    color: #3e3e3e;
+    display: inline-block;
+    margin-right: 5px;
+}
+
+.bpm {
+	font-size: 14px;
+    color: #c3c3c3;
+}
+
+.play {
+	width: 50px;
+    height: 50px;
+    border: none;
+    outline: none;
+    border-radius: 50%;
+    background-color: #60d08e;
+    color: #fff;
+    font-size: 14px;
+	transition: all 0.2s ease-out;
+}
+
+.hit-effect {
+    box-shadow: 0px 0px 8px 12px rgba(97, 255, 184, 0.23), 0px 0px 2px 4px rgba(78, 197, 131, 0.4);
+}
+
+.beat-slider {
+	width: 100%;
+	 -webkit-appearance: none; /* Hides the slider so that custom slider can be made */
+	  outline: none;
+}
+
+.beat-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  height: 16px;
+  width: 16px;
+  margin-top: -6px;
+  border-radius: 50%;
+  background-color: #60d08e;
+  cursor: pointer;
+  box-shadow: 0px 1px 1px rgba(0,0,0,.2);
+}
+
+.beat-slider::-webkit-slider-runnable-track {
+  width: 100%;
+  cursor: pointer;
+  box-shadow: 0px 1px 1px rgba(0,0,0,.2); 
+  background: #e3e3e3;
+  height: 2px;
+}
+
+
+/* font awesome */
+.play-text {
+	font-size: 20px;
+}
+.fa-play {
+	margin-left: 4px;
+}

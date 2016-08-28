@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width" initial-scale="1">
+		<link rel="stylesheet" src="//normalize-css.googlecode.com/svn/trunk/normalize.css" />
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+		<link rel="stylesheet" href="metronome.css"/>
+		<title>Metronome</title>
+	</head>
+	<body>
+		<div class="metronome">
+			<div class="player">
+				<div><span class="beats"></span><span class="bpm">BPM</span></div>
+				<div>
+					<button class="play"><span class="play-text fa fa-play"></span></button>
+				</div>
+			</div>
+			<input class="beat-slider" type="range" min="0" max="42" value="15">
+		</div>
+		<script type="text/javascript" src="metronome.js"></script>
+	</body>
+</html>
