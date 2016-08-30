@@ -48,8 +48,8 @@ body {
 
 .beat-slider {
 	width: 100%;
-	 -webkit-appearance: none; /* Hides the default slider so that a custom slider can be made */
-	  outline: none;
+	-webkit-appearance: none; /* Hides the default slider so that a custom slider can be made */
+	outline: none;
 }
 
 /* Styles the adjustable knob of the slider */
@@ -64,6 +64,18 @@ body {
   box-shadow: 0px 1px 1px rgba(0,0,0,.2);
 }
 
+.beat-slider::-moz-range-thumb {
+  -webkit-appearance: none;
+  height: 16px;
+  width: 16px;
+  margin-top: -6px;
+  border-radius: 50%;
+  border: none;
+  background-color: #60d08e;
+  cursor: pointer;
+  box-shadow: 0px 1px 1px rgba(0,0,0,.2);
+}
+
 /* Styles the track the the slider button moves across */
 .beat-slider::-webkit-slider-runnable-track {
   width: 100%;
@@ -71,6 +83,20 @@ body {
   box-shadow: 0px 1px 1px rgba(0,0,0,.2); 
   background: #e3e3e3;
   height: 2px;
+}
+
+.beat-slider::-moz-range-track {
+  width: 100%;
+  cursor: pointer;
+  box-shadow: 0px 1px 1px rgba(0,0,0,.2); 
+  background: #e3e3e3;
+  height: 2px;
+  outline: none;
+}
+
+/* Removes dotted border in firefox on selection */
+.beat-slider::-moz-focus-outer {
+  border: 0;
 }
 
 /* font awesome classes - with small adjustments */
