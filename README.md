@@ -23,4 +23,6 @@ You can find the complete solution [here](https://github.com/klufkin/simple-metr
 
 If you looked at Google's metronome, you may have noticed that some of the UI elements change color as the BPM is adjusted. My current solution does not contain this feature. So my challenge to you is to devise an algorithm and implement a function to alter the UI's colors like that of [Google's Metronome](https://www.google.com/?ion=1&espv=2#q=metronome). I encourage you to share any of the work you complete!
 
+Thanks to [Rafael Nunez](https://github.com/rafael-nunez) for taking the time to come up with a color changing solution!
+
 Cheers!!!

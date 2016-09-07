@@ -11,11 +11,26 @@
 	// store DOM object nodes
 	let _playController, _controllerText, _beats, _beatSlider;
 
+	// create an <img> element to hold a color gradient
+	let gradient = document.createElement('img');
+	// Then point image at a "Data URI", which is hardcoded inline image data embedded in the document
+	// It is sometimes used to reduce HTTP Requests, not very reader friendly though :/. 
+	// This base64 code creates a line with a rainbow gradient, which we can use to color our components with using the canvas element
+	gradient.src = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA8AAAAABCAIAAACe6FBAAAACmklEQVQYGQXB0W0lWBVFwdr3uUFC/JAZAZAnkSHNTNtnUbV//+e///zHv/rc7XADAFEBTQCsIGwDQIXwNgCgCQCoXRDetgGnK4QBxAQCAIAmABMmmIaqCQAAgCaAtgGTMaC6ApqACQBEbRkA2FAhDNB2HgAEcAMAQCS0Rc0sJtAEQCwPJgBEoIIJZLdhlATW3AKgMbR+XhqLhOrnLQ+4idNRoUGWATYDWARsAyIAAMA2wGAGoCFi2wMRAFiAtTcAmgUAaN2OZNt7CwIWU6UhTV8HALCYPSIoAMYCAMAGABZgAQAMKWDbxkAagACgsWEDMmIBAGC9RywASLcDCAC2AegFQA92AAAOnGHYtmEgANLYT4zY0DZDgDQgeA8EYqC9AAQAzIwdAKwD4AXgBgAI8AYAADigsRHg/SYAAF53O2BubFu++tmGt+Stx+Ozn9dtmz72Fs39ut/T42nbR0Ne31sPevPugF9uPJuj6a3pq7826zbPTWZ87t5s6R6bIV/9vN2y1d3mg3z8td1Y99ha3u7j1o2tNw/d8vwez57mOO7Nl3uB3bsbNP62709hbrU74PP+fFrmNtP0WL/n5w3NPSb83R/PrSbu+ebo+XNuet3WAD4as8cEyCcDy5vNmH0yhixjgbU2aW82Y1oPC7AMfGrCMsYCYCwAsCwFAPBsBmCIEdNBBYbHCjaBFNcwWFAxSQsaLEDB2AlgIJwBQAowALxbQYUBvGGhFgC8mmJMKlhcmYlieCYVq7DWLFSIMdeybQB0h1CAsQBlA8bCNVAqwDwEWYjiAXhnl0FZAbMF1TZ0DQEAFAAYTgAASuwMDEBEAAAARNz4QKsrm1hGBWCmkS5pawboCAAAGwOULgAAAGDVPt+f/brvn//5P3MbCWuuXNTkAAAAAElFTkSuQmCC";
+	// Creat canvas element, which will be used to pull colors needed for color changing components
+	let canvas = document.createElement('canvas');
+	// Set width to slightly larger than beat range
+	canvas.width = 209;
+	canvas.height = 1;
+	// draws the gradient onto the canvas
+	canvas.getContext('2d').drawImage(gradient, 0, 0, canvas.width, canvas.height);
+
 	// Initializes Metronome
 	function init(){
 		_cacheDom();
 		_addEvents();
 		updateBPM();
+		changeColors();
 		buildAudio(); 
 	}
 
@@ -36,7 +51,7 @@
 		});
 
 		//When dragging the slider will update the bpm value
-		_beatSlider.addEventListener('input', function(){updateBPM()});
+		_beatSlider.addEventListener('input', function(){updateBPM(); changeColors();});
 
 		// Restart/update the playing BPM upon moving the slider, regardless of whether it's on or off
 		//event fires upon releasing the slider
@@ -87,6 +102,7 @@
 	function beat(){
 		gainNode.gain.value = .4; // sets audio to 40% volume
 		_playController.classList.add('hit-effect'); // applies visual beat display
+		_playController.style.borderWidth = '8px'; // applies visual beat display
 		
 		// Determines length of time to play each beat sound - in this case being 100 milliseconds
 		window.setTimeout(function(){
@@ -95,6 +111,7 @@
 			
 			// removes visual effect to replicate pulse
 			_playController.classList.remove('hit-effect');
+			_playController.style.borderWidth = '0px';
 		},100);
 	}
 
@@ -128,6 +145,29 @@
 
 		gainNode.gain.value = 0; // sets volume to 0% so we will not hear anything
 	}
+	// Changes color of elements
+	function changeColors() {
+     	 // get the color data from the canvas using the bpm as the x coordinate
+     	 let rgbValues = canvas.getContext('2d').getImageData(bpm, 0, 1, 1).data;
+     	 // concatenate color data into rbg string
+     	 let bkgColor = "rgb(" + rgbValues[0]  + ", " + rgbValues[1] + ", " + rgbValues[2] + ")";
+     	 // calculate color value for button hit effect
+      	 let hitEffect = "rgba(" + rgbValues[0] + 5+ ", " + rgbValues[1]+ 5 + ", " + rgbValues[2]+ 5 + " ,.4)";
+     
+     	// Set Button Color
+      	_playController.style.backgroundColor = bkgColor;
+      	_playController.style.borderColor = hitEffect;
+
+      	// This is a feature check to determine whether or not the browzer in use is firefox
+      	 if (typeof InstallTrigger !== 'undefined') {
+      	 	// if fire fox: insert slider styling - note that this will throw an error if ran locally
+		    document.styleSheets[0].insertRule('input[type=range]::-moz-range-thumb { background: ' + bkgColor + ' }', document.styleSheets[0].cssRules.length);
+      	 }
+      	 else {
+      	 	// if webkit: insert slider styling
+       		document.styleSheets[0].addRule('input[type=range]::-webkit-slider-thumb', 'background-color: ' + bkgColor);
+      	 }
+	 }	
 	// build metronome
 	init();
 })()

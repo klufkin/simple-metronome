@@ -32,9 +32,10 @@ body {
 .play {
 	width: 50px;
   height: 50px;
-  border: none;
+  /*border: none;*/
   outline: none;
   border-radius: 50%;
+  border: 0px solid;
   background-color: #60d08e;
   color: #fff;
   font-size: 14px;
@@ -43,7 +44,7 @@ body {
 
 /* Box shadow styling for button pulse effect */
 .hit-effect {
-    box-shadow: 0px 0px 8px 12px rgba(97, 255, 184, 0.23), 0px 0px 2px 4px rgba(78, 197, 131, 0.4);
+    box-shadow: 0px 0px 8px 12px rgba(204, 204, 204, 0.2), 0px 0px 2px 4px rgba(184, 184, 184, 0.23);
 }
 
 .beat-slider {
