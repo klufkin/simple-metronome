@@ -160,8 +160,8 @@
 
       	// This is a feature check to determine whether or not the browzer in use is firefox
       	 if (typeof InstallTrigger !== 'undefined') {
-      	 	// if fire fox: insert slider styling - note that this will throw an error if ran locally
-		    document.styleSheets[0].insertRule('input[type=range]::-moz-range-thumb { background: ' + bkgColor + ' }', document.styleSheets[0].cssRules.length);
+      	 	// if fire fox: attempted to assert styling, but throws security error.
+		    // document.styleSheets[0].insertRule('input[type=range]::-moz-range-thumb { background: ' + bkgColor + ' }', document.styleSheets[0].cssRules.length);
       	 }
       	 else {
       	 	// if webkit: insert slider styling
