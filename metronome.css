@@ -32,10 +32,9 @@ body {
 .play {
 	width: 50px;
   height: 50px;
-  /*border: none;*/
-  outline: none;
+  outline: 0;
   border-radius: 50%;
-  border: 0px solid;
+  border: 0px solid #fff;
   background-color: #60d08e;
   color: #fff;
   font-size: 14px;

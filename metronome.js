@@ -24,14 +24,13 @@
 	canvas.height = 1;
 	// draws the gradient onto the canvas
 	canvas.getContext('2d').drawImage(gradient, 0, 0, canvas.width, canvas.height);
-
 	// Initializes Metronome
 	function init(){
 		_cacheDom();
 		_addEvents();
 		updateBPM();
-		changeColors();
 		buildAudio(); 
+		changeColors();
 	}
 
 	// captures and stores needed html DOM elements
@@ -103,12 +102,13 @@
 		gainNode.gain.value = .4; // sets audio to 40% volume
 		_playController.classList.add('hit-effect'); // applies visual beat display
 		_playController.style.borderWidth = '8px'; // applies visual beat display
-		
+
 		// Determines length of time to play each beat sound - in this case being 100 milliseconds
 		window.setTimeout(function(){
 			// set audio to zero(inaudible) to end beat sound and prevents audio clipping
+
 			gainNode.gain.value = 0;
-			
+
 			// removes visual effect to replicate pulse
 			_playController.classList.remove('hit-effect');
 			_playController.style.borderWidth = '0px';
@@ -125,6 +125,8 @@
 		
 		// creates a gainNode - used as the volume controller
 		gainNode = audioCtx.createGain();
+
+		gainNode.gain.value = 0; // sets volume to 0% so we will not hear anything
 		
 		// connects the gain and oscillator nodes, so that the gain can control the oscillators volume
 		oscillator.connect(gainNode);
@@ -135,19 +137,17 @@
 
 		oscillator.frequency.value = 261.63; // sets the frequency value in hertz for a C - note
 		
-		// turns on the oscillator to produce sound - will not produce sound at this po
+		// turns on the oscillator to produce sound - will not produce sound at this point
 		oscillator.start();
-		
+
 		// A final connection needs to be made between the gainNode and destination(typcially the speakers of your device)
 		// We are building a chain of nodes to produce the sound 
 		// oscillator(sound signal) -- gain(volume) -- destination (speakers)
 		gainNode.connect(audioCtx.destination);
 
-		gainNode.gain.value = 0; // sets volume to 0% so we will not hear anything
 	}
 	// Changes color of elements
 	function changeColors() {
-     	 // get the color data from the canvas using the bpm as the x coordinate
      	 let rgbValues = canvas.getContext('2d').getImageData(bpm, 0, 1, 1).data;
      	 // concatenate color data into rbg string
      	 let bkgColor = "rgb(" + rgbValues[0]  + ", " + rgbValues[1] + ", " + rgbValues[2] + ")";
@@ -160,8 +160,9 @@
 
       	// This is a feature check to determine whether or not the browzer in use is firefox
       	 if (typeof InstallTrigger !== 'undefined') {
-      	 	// if fire fox: attempted to assert styling, but throws security error.
-		    // document.styleSheets[0].insertRule('input[type=range]::-moz-range-thumb { background: ' + bkgColor + ' }', document.styleSheets[0].cssRules.length);
+      	 	// if fire fox: assert styling for slider
+      	 	let styleSheet = document.styleSheets[1]; // grab 2nd stylesheet (our main) - make sure you are grabbing the right stylesheet!
+		    styleSheet.insertRule('input[type=range]::-moz-range-thumb { background: ' + bkgColor + ' }', styleSheet.cssRules.length);
       	 }
       	 else {
       	 	// if webkit: insert slider styling
