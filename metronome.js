@@ -11,25 +11,15 @@
 	// store DOM object nodes
 	let _playController, _controllerText, _beats, _beatSlider;
 
-	// create an <img> element to hold a color gradient
-	let gradient = document.createElement('img');
-	// Then point image at a "Data URI", which is hardcoded inline image data embedded in the document
-	// It is sometimes used to reduce HTTP Requests, not very reader friendly though :/. 
-	// This base64 code creates a line with a rainbow gradient, which we can use to color our components with using the canvas element
-	gradient.src = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA8AAAAABCAIAAACe6FBAAAACmklEQVQYGQXB0W0lWBVFwdr3uUFC/JAZAZAnkSHNTNtnUbV//+e///zHv/rc7XADAFEBTQCsIGwDQIXwNgCgCQCoXRDetgGnK4QBxAQCAIAmABMmmIaqCQAAgCaAtgGTMaC6ApqACQBEbRkA2FAhDNB2HgAEcAMAQCS0Rc0sJtAEQCwPJgBEoIIJZLdhlATW3AKgMbR+XhqLhOrnLQ+4idNRoUGWATYDWARsAyIAAMA2wGAGoCFi2wMRAFiAtTcAmgUAaN2OZNt7CwIWU6UhTV8HALCYPSIoAMYCAMAGABZgAQAMKWDbxkAagACgsWEDMmIBAGC9RywASLcDCAC2AegFQA92AAAOnGHYtmEgANLYT4zY0DZDgDQgeA8EYqC9AAQAzIwdAKwD4AXgBgAI8AYAADigsRHg/SYAAF53O2BubFu++tmGt+Stx+Ozn9dtmz72Fs39ut/T42nbR0Ne31sPevPugF9uPJuj6a3pq7826zbPTWZ87t5s6R6bIV/9vN2y1d3mg3z8td1Y99ha3u7j1o2tNw/d8vwez57mOO7Nl3uB3bsbNP62709hbrU74PP+fFrmNtP0WL/n5w3NPSb83R/PrSbu+ebo+XNuet3WAD4as8cEyCcDy5vNmH0yhixjgbU2aW82Y1oPC7AMfGrCMsYCYCwAsCwFAPBsBmCIEdNBBYbHCjaBFNcwWFAxSQsaLEDB2AlgIJwBQAowALxbQYUBvGGhFgC8mmJMKlhcmYlieCYVq7DWLFSIMdeybQB0h1CAsQBlA8bCNVAqwDwEWYjiAXhnl0FZAbMF1TZ0DQEAFAAYTgAASuwMDEBEAAAARNz4QKsrm1hGBWCmkS5pawboCAAAGwOULgAAAGDVPt+f/brvn//5P3MbCWuuXNTkAAAAAElFTkSuQmCC";
-	// Creat canvas element, which will be used to pull colors needed for color changing components
-	let canvas = document.createElement('canvas');
-	// Set width to slightly larger than beat range
-	canvas.width = 209;
-	canvas.height = 1;
-	// draws the gradient onto the canvas
-	canvas.getContext('2d').drawImage(gradient, 0, 0, canvas.width, canvas.height);
-	// Initializes Metronome
+	// create a <canvas> element to hold our the color gradient
+    let canvas = document.createElement('canvas');
+
 	function init(){
 		_cacheDom();
 		_addEvents();
 		updateBPM();
 		buildAudio(); 
+		buildGradient();
 		changeColors();
 	}
 
@@ -146,8 +136,40 @@
 		gainNode.connect(audioCtx.destination);
 
 	}
+
+	function buildGradient(){
+		// We set the canvas width to slightly larger than beat range
+		// This will allow us to grab colors for every beat on the slider
+	    canvas.width = 209;
+	    canvas.height = 1;
+
+		// This creates a 2d context object, which is used to build 2D visuals like images, rectangles, and text
+		// This will be used to create our color gradient for the slider.
+	    let canvasContext = canvas.getContext("2d");
+
+	    // Create linear canvas gradient object on which we'll specify our colors, - specify x/y position and width/height
+	    let gradient = canvasContext.createLinearGradient(0, 0, canvas.width, canvas.height);
+
+	   	// Create color gradient by adding color stops
+	    // define colors to add - can use any color format but must be in quotes - offset, color
+	      gradient.addColorStop(0.002, 'rgba(38, 57, 201, 1.000)');
+	      gradient.addColorStop(0.217, 'rgba(11, 122, 226, 1.000)');
+	      gradient.addColorStop(0.506, 'rgba(4, 206, 118, 1.000)');
+  	      gradient.addColorStop(0.735, 'rgba(239, 220, 11, 1.000)');
+	      gradient.addColorStop(1.000, 'rgba(242, 67, 9, 1.000)');
+	      gradient.addColorStop(1.000, 'rgba(255, 255, 255, 1.000)');
+
+	    // Use the gradient as the color fill for the context object
+	    canvasContext.fillStyle = gradient;
+
+	    // draw the context fill onto the canvas object - specify x/y position and width/height
+	    canvasContext.fillRect(0, 0, canvas.width, canvas.height);
+    }
+
 	// Changes color of elements
 	function changeColors() {
+		 // Creates an object that represents the underlying pixel data for the area of the canvas 
+		 // denoted by the rectangle specified in the arguments - x/y position and width/height
      	 let rgbValues = canvas.getContext('2d').getImageData(bpm, 0, 1, 1).data;
      	 // concatenate color data into rbg string
      	 let bkgColor = "rgb(" + rgbValues[0]  + ", " + rgbValues[1] + ", " + rgbValues[2] + ")";
